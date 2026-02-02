@@ -9,35 +9,35 @@ export const AuthProvider = ({ children }) => {
 
   // 🔍 Verificar sesión al cargar la app
   const checkAuth = async () => {
-  try {
-    // 1️⃣ Intento normal
-    const res = await api.get("/users/profile/", {
-      skipAuthRefresh: true,
-    });
-    setUser(res.data);
-  } catch {
     try {
-      // 2️⃣ Intentar refresh MANUAL
-      await api.post("/users/refresh/", {
-        skipAuthRefresh: true,
-      });
-
-      // 3️⃣ Reintentar profile
+      // 1️⃣ Intento normal
       const res = await api.get("/users/profile/", {
         skipAuthRefresh: true,
       });
       setUser(res.data);
     } catch {
-      // 4️⃣ No hay sesión recuperable
-      setUser(null);
-    }
-  } finally {
-    setLoading(false);
-  }
-};
+      try {
+        // 2️⃣ Intentar refresh MANUAL
+        await api.post("/users/refresh/", {
+          skipAuthRefresh: true,
+        });
 
+        // 3️⃣ Reintentar profile
+        const res = await api.get("/users/profile/", {
+          skipAuthRefresh: true,
+        });
+        setUser(res.data);
+      } catch {
+        // 4️⃣ No hay sesión recuperable
+        setUser(null);
+      }
+    } finally {
+      setLoading(false);
+    }
+  };
 
   useEffect(() => {
+    api.get("/users/csrf/");
     checkAuth();
   }, []);
 

@@ -3,6 +3,8 @@ from django.contrib.auth.models import User
 from django.contrib.auth import authenticate
 
 from rest_framework.decorators import api_view, permission_classes, authentication_classes
+from django.views.decorators.csrf import ensure_csrf_cookie
+
 from rest_framework.permissions import AllowAny, IsAuthenticated, IsAuthenticated
 from rest_framework.response import Response
 from rest_framework import status
@@ -109,7 +111,7 @@ class CookieTokenRefreshView(TokenRefreshView):
         try:
             response = super().post(request, *args, **kwargs)
         except:
-            response = JsonResponse({'error': 'Refresh expirado'}, status=401)
+            response = JsonResponse({'error': 'Refresh expired'}, status=401)
             response.delete_cookie('access')
             response.delete_cookie('refresh')
             return response
@@ -121,6 +123,13 @@ class CookieTokenRefreshView(TokenRefreshView):
                 httponly=True,
                 samesite='Lax',
             )
-            response.data = {'message': 'Token refrescado'}
+            response.data = {'message': 'Token refreshed'}
 
         return response
+
+@api_view(['GET'])
+@permission_classes([AllowAny])
+@ensure_csrf_cookie
+def csrf(request):
+    return JsonResponse({'message': 'CSRF cookie set'})
+
