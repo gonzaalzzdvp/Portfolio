@@ -8,11 +8,7 @@ const Profile = () => {
 
   useEffect(() => {
     api
-      .get("/users/profile/", {
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
-        },
-      })
+      .get("/users/profile/")
       .then((res) => setUser(res.data))
       .catch(() => logout());
   }, []);

@@ -4,7 +4,7 @@ import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Profile from "./pages/Profile";
 import ProtectedRoute from "./auth/ProtectedRoute";
-import PublicRoute from './auth/PublicRoute'
+import PublicRoute from "./auth/PublicRoute";
 
 function App() {
   return (

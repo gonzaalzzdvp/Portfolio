@@ -1,4 +1,6 @@
 import { createContext, useContext, useState } from "react";
+import api from "../api/axios";
+import toast from "react-hot-toast";
 
 const AuthContext = createContext(null);
 
@@ -17,11 +19,24 @@ export const AuthProvider = ({ children }) => {
     setRefreshToken(refresh);
   };
 
-  const logout = () => {
-    localStorage.removeItem("access");
-    localStorage.removeItem("refresh");
-    setAccessToken(null);
-    setRefreshToken(null);
+  const logout = async () => {
+    const loadingToast = toast.loading("Loggin out");
+    const refresh = localStorage.getItem("refresh");
+
+    try {
+      if (refresh) {
+        await api.post("/users/logout/", { refresh });
+      }
+
+      toast.success("Sesión cerrada", { id: loadingToast });
+    } catch {
+      toast.error("Error al cerrar sesión", { id: loadingToast });
+    } finally {
+      localStorage.clear();
+      setAccessToken(null);
+      setRefreshToken(null);
+      window.location.href = "/login";
+    }
   };
 
   const isAuthenticated = !!accessToken;

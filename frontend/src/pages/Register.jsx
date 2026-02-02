@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import api from "../api/axios";
+import toast from "react-hot-toast";
 
 const Register = () => {
   const [username, setUsername] = useState("");
@@ -11,6 +12,8 @@ const Register = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    const loadingToast = toast.loading("Creating account...");
+
     try {
       await api.post("/users/register/", {
         username,
@@ -19,8 +22,14 @@ const Register = () => {
       });
 
       navigate("/login");
+
+      toast.success("Cuenta creada correctamente", {
+        id: loadingToast,
+      });
     } catch (err) {
-      alert("Error");
+      toast.error("Error al registrar usuario", {
+        id: loadingToast,
+      });
     }
   };
 
@@ -45,13 +54,13 @@ const Register = () => {
 
       <input
         type="password"
-        placeholder="Password"
+        placeholder="Contraseña"
         value={password}
         onChange={(e) => setPassword(e.target.value)}
         required
       />
 
-      <button type="submit">Create Account</button>
+      <button type="submit">Crear cuenta</button>
     </form>
   );
 };
