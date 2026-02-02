@@ -2,66 +2,59 @@ import axios from "axios";
 
 const api = axios.create({
   baseURL: "http://localhost:8000/api",
-  headers: {
-    "Content-Type": "application/json",
-  },
+  withCredentials: true, // 🍪 FUNDAMENTAL
 });
 
-// REQUEST: agrega access token
-api.interceptors.request.use(
-  (config) => {
-    const access = localStorage.getItem("access");
-    if (access) {
-      config.headers.Authorization = `Bearer ${access}`;
-    }
-    return config;
-  },
-  (error) => Promise.reject(error)
-);
+// 🔒 Evitar múltiples refresh al mismo tiempo
+let isRefreshing = false;
+let failedQueue = [];
 
-// RESPONSE: refresh automático
+const processQueue = (error = null) => {
+  failedQueue.forEach((prom) => {
+    if (error) prom.reject(error);
+    else prom.resolve();
+  });
+  failedQueue = [];
+};
+
+// RESPONSE INTERCEPTOR
 api.interceptors.response.use(
   (response) => response,
   async (error) => {
     const originalRequest = error.config;
 
-    // Si no es 401 o ya se reintentó → error normal
     if (
       error.response?.status !== 401 ||
-      originalRequest._retry
+      originalRequest._retry ||
+      originalRequest.skipAuthRefresh ||
+      originalRequest.url.includes("/users/login") ||
+      originalRequest.url.includes("/users/refresh")
     ) {
       return Promise.reject(error);
     }
 
-    // Evitar loop infinito
     originalRequest._retry = true;
 
-    const refresh = localStorage.getItem("refresh");
-    if (!refresh) {
-      localStorage.clear();
-      window.location.href = "/login";
-      return Promise.reject(error);
+    if (isRefreshing) {
+      return new Promise((resolve, reject) => {
+        failedQueue.push({ resolve, reject });
+      }).then(() => api(originalRequest));
     }
+
+    isRefreshing = true;
 
     try {
-      const res = await axios.post(
-        "http://localhost:8000/api/users/refresh/",
-        { refresh }
-      );
-
-      const newAccess = res.data.access;
-      localStorage.setItem("access", newAccess);
-
-      // Actualizar header y reintentar request original
-      originalRequest.headers.Authorization = `Bearer ${newAccess}`;
+      await api.post("/users/refresh/");
+      processQueue();
       return api(originalRequest);
-    } catch (refreshError) {
-      // Refresh inválido → logout forzado
-      localStorage.clear();
+    } catch (err) {
+      processQueue(err);
       window.location.href = "/login";
-      return Promise.reject(refreshError);
+      return Promise.reject(err);
+    } finally {
+      isRefreshing = false;
     }
-  }
+  },
 );
 
 export default api;

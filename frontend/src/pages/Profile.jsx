@@ -1,29 +1,18 @@
-import { useEffect, useState } from "react";
-import api from "../api/axios";
 import { useAuth } from "../context/AuthContext";
+import toast from "react-hot-toast";
 
-const Profile = () => {
-  const [user, setUser] = useState(null);
-  const { accessToken, logout } = useAuth();
+export default function Profile() {
+  const { user, logout } = useAuth();
 
-  useEffect(() => {
-    api
-      .get("/users/profile/")
-      .then((res) => setUser(res.data))
-      .catch(() => logout());
-  }, []);
-
-  if (!user) return <p>Loading...</p>;
+  const handleLogout = async () => {
+    await logout();
+    toast.success("Logged Out");
+  };
 
   return (
-    <div>
-      <h2>Profile</h2>
-      <p>User: {user.username}</p>
-      <p>Email: {user.email}</p>
-
-      <button onClick={logout}>Logout</button>
-    </div>
+    <>
+      <h1>Hello {user.email}</h1>
+      <button onClick={handleLogout}>Logout</button>
+    </>
   );
-};
-
-export default Profile;
+}

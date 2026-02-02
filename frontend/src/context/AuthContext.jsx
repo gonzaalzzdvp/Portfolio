@@ -1,49 +1,71 @@
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
 import api from "../api/axios";
-import toast from "react-hot-toast";
 
-const AuthContext = createContext(null);
+const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
-  const [accessToken, setAccessToken] = useState(
-    localStorage.getItem("access")
-  );
-  const [refreshToken, setRefreshToken] = useState(
-    localStorage.getItem("refresh")
-  );
+  const [user, setUser] = useState(null);
+  const [loading, setLoading] = useState(true);
 
-  const login = (access, refresh) => {
-    localStorage.setItem("access", access);
-    localStorage.setItem("refresh", refresh);
-    setAccessToken(access);
-    setRefreshToken(refresh);
+  // 🔍 Verificar sesión al cargar la app
+  const checkAuth = async () => {
+  try {
+    // 1️⃣ Intento normal
+    const res = await api.get("/users/profile/", {
+      skipAuthRefresh: true,
+    });
+    setUser(res.data);
+  } catch {
+    try {
+      // 2️⃣ Intentar refresh MANUAL
+      await api.post("/users/refresh/", {
+        skipAuthRefresh: true,
+      });
+
+      // 3️⃣ Reintentar profile
+      const res = await api.get("/users/profile/", {
+        skipAuthRefresh: true,
+      });
+      setUser(res.data);
+    } catch {
+      // 4️⃣ No hay sesión recuperable
+      setUser(null);
+    }
+  } finally {
+    setLoading(false);
+  }
+};
+
+
+  useEffect(() => {
+    checkAuth();
+  }, []);
+
+  const login = async (email, password) => {
+    await api.post("/users/login/", { email, password });
+    await checkAuth();
+  };
+
+  const register = async (data) => {
+    await api.post("/users/register/", data);
+    await login(data.email, data.password);
   };
 
   const logout = async () => {
-    const loadingToast = toast.loading("Loggin out");
-    const refresh = localStorage.getItem("refresh");
-
-    try {
-      if (refresh) {
-        await api.post("/users/logout/", { refresh });
-      }
-
-      toast.success("Sesión cerrada", { id: loadingToast });
-    } catch {
-      toast.error("Error al cerrar sesión", { id: loadingToast });
-    } finally {
-      localStorage.clear();
-      setAccessToken(null);
-      setRefreshToken(null);
-      window.location.href = "/login";
-    }
+    await api.post("/users/logout/");
+    setUser(null);
   };
-
-  const isAuthenticated = !!accessToken;
 
   return (
     <AuthContext.Provider
-      value={{ accessToken, refreshToken, login, logout, isAuthenticated }}
+      value={{
+        user,
+        isAuthenticated: !!user,
+        login,
+        register,
+        logout,
+        loading,
+      }}
     >
       {children}
     </AuthContext.Provider>
