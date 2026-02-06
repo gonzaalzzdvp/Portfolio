@@ -1,0 +1,66 @@
+.h-button2 {
+  position: relative; /* 🔥 FUNDAMENTAL */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background: var(--colorBlue);
+  width: 10rem;
+  height: 10rem;
+  padding: 0;
+
+  border: 3px solid white;
+  border-radius: 50%;
+
+  overflow: hidden;
+  color: var(--colorWhite);
+  font-size: large;
+  cursor: pointer;
+}
+
+.h-button2::before {
+  content: attr(data-text);
+  position: absolute;
+  inset: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  letter-spacing: 3.5px;
+  text-transform: uppercase;
+
+  opacity: 1;
+  transform: translateY(0);
+  transition: 0.25s cubic-bezier(0.5, -1, 0.5, 2);
+}
+
+.h-button2 span {
+  display: inline-block;
+  min-width: 0.3em;
+  text-transform: uppercase;
+
+  opacity: 0;
+  transform: translateY(-20px);
+
+  transition: 0.25s cubic-bezier(0.5, -1, 0.5, 2);
+}
+
+.h-button2:hover::before,
+.h-button2:focus::before {
+  opacity: 0;
+  transform: translateY(20px);
+}
+
+.h-button2:hover span,
+.h-button2:focus span {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.h-button2:hover span:nth-child(1) { transition-delay: 0.025s; }
+.h-button2:hover span:nth-child(2) { transition-delay: 0.05s; }
+.h-button2:hover span:nth-child(3) { transition-delay: 0.075s; }
+.h-button2:hover span:nth-child(4) { transition-delay: 0.1s; }
+.h-button2:hover span:nth-child(5) { transition-delay: 0.125s; }
+.h-button2:hover span:nth-child(6) { transition-delay: 0.15s; }

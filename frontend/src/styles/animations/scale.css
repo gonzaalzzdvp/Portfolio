@@ -1,0 +1,21 @@
+/* Hover-Scale for letters */
+
+.hover-scale {
+  display: inline-block; /* 🔑 necesario para transform */
+  transition: transform 0.25s ease, color 0.25s ease;
+  will-change: transform;
+}
+
+.hover-scale:hover {
+  transform: scale(1.15);
+}
+
+/* Hover-Scale for items */
+
+.hover-scale2 {
+  transition: transform 0.4s ease, box-shadow 0.4s ease;
+}
+
+.hover-scale2:hover {
+  transform: scale(1.05);
+}

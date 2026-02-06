@@ -1,0 +1,11 @@
+.rrhh {
+    padding: .4rem;
+    border-radius: 1rem;
+    border: 3px solid var(--colorRed);
+    font-size: 36px;
+    color: var(--colorWhite);
+}
+
+.rrhh:hover {
+    color: var(--colorRed);
+}
