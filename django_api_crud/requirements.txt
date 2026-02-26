@@ -1,8 +1,8 @@
-Django==5.x.x
-djangorestframework==3.x.x
-django-cors-headers==4.x.x
-djangorestframework-simplejwt==5.x.x
-gunicorn==21.x.x
-whitenoise==6.x.x
-dj-database-url==2.x.x
-psycopg2-binary==2.x.x
+Django==5.0.6
+djangorestframework==3.15.1
+django-cors-headers==4.3.1
+djangorestframework-simplejwt==5.3.1
+gunicorn==21.2.0
+whitenoise==6.6.0
+dj-database-url==2.1.0
+psycopg2-binary==2.9.9
