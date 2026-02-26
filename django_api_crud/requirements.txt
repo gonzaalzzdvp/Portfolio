@@ -1,1 +1,8 @@
-pip freeze > requirements.txt
+Django==5.x.x
+djangorestframework==3.x.x
+django-cors-headers==4.x.x
+djangorestframework-simplejwt==5.x.x
+gunicorn==21.x.x
+whitenoise==6.x.x
+dj-database-url==2.x.x
+psycopg2-binary==2.x.x
