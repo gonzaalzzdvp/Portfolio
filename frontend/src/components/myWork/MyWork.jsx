@@ -1,6 +1,6 @@
 export default function MyWork() {
   return (
-    <div>
+    <div className="h-screen bg-(--colorWhite)">
       
     </div>
   )

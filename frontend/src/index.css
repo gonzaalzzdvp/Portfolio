@@ -1,16 +1,16 @@
 @import "tailwindcss";
 
 :root {
-  --colorBlack: #32322C;
-  --colorWhite: #FFFFFA;
-  --colorYellow: #FFCC00;
-  --colorRed: #B80000;
-  --colorBlue: #0B0258;
+  --colorBlack: #191726;
+  --colorWhite: #F2F2F2;
+  --colorYellow: #D8F213;
+  --colorRed: #5D7173;
+  --colorBlue: #027368;
 }
 
 html {
     scroll-behavior: smooth;
-    overflow-x: hidden;
+    overflow: hidden;
     font-family: "Rubik", sans-serif;
     font-optical-sizing: auto;
     font-weight: 300;

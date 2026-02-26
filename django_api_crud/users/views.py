@@ -53,19 +53,19 @@ def login(request):
 
     # 🍪 Cookies
     response.set_cookie(
-        key='access',
-        value=str(refresh.access_token),
+        "access",
+        str(refresh.access_token),
         httponly=True,
-        samesite='Lax',
-        secure=False  
+        secure=True,          
+        samesite="None",      
     )
 
     response.set_cookie(
         key='refresh',
         value=str(refresh),
         httponly=True,
-        samesite='Lax',
-        secure=False  
+        secure=True, 
+        samesite="None"
     )
 
     return response

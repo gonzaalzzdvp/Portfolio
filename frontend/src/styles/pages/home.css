@@ -1,0 +1,12 @@
+.container {
+    width: 100%;
+    overflow: auto;
+    height: 100vh;
+
+    scroll-snap-type: y mandatory;
+}
+
+section {
+    width: 100%;
+    scroll-snap-align: start;
+}

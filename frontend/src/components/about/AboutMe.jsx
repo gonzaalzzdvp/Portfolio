@@ -26,19 +26,35 @@ export default function AboutMe() {
       </div>
       <div className="w-full flex justify-between items-center">
         <div className="flex self-start gap-4">
-                  <a target="_blank" href={'http://www.Instagram.com'} className="hover-scale rrhh">
-                    <FontAwesomeIcon icon={faInstagram} />
-                  </a>
-                  <a target="_blank" href={'http://www.Linkedin.com'} className="hover-scale rrhh">
-                    <FontAwesomeIcon icon={faLinkedinIn} />
-                  </a>
-                  <a target="_blank" href={'http://www.Facebook.com'} className="hover-scale rrhh">
-                    <FontAwesomeIcon icon={faFacebookF} />
-                  </a>
-                  <a target="_blank" href={'http://www.X.com'} className="hover-scale rrhh">
-                    <FontAwesomeIcon icon={faXTwitter} />
-                  </a>
-                </div>
+          <a
+            target="_blank"
+            href={"http://www.Instagram.com"}
+            className="hover-scale rrhh"
+          >
+            <FontAwesomeIcon icon={faInstagram} />
+          </a>
+          <a
+            target="_blank"
+            href={"http://www.Linkedin.com"}
+            className="hover-scale rrhh"
+          >
+            <FontAwesomeIcon icon={faLinkedinIn} />
+          </a>
+          <a
+            target="_blank"
+            href={"http://www.Facebook.com"}
+            className="hover-scale rrhh"
+          >
+            <FontAwesomeIcon icon={faFacebookF} />
+          </a>
+          <a
+            target="_blank"
+            href={"http://www.X.com"}
+            className="hover-scale rrhh"
+          >
+            <FontAwesomeIcon icon={faXTwitter} />
+          </a>
+        </div>
         <div className="flex justify-end">
           <a
             aria-label="Thanks"
