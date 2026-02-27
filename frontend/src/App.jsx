@@ -16,8 +16,12 @@ import api from "./api/axios";
 
 function App() {
   useEffect(() => {
-    api.get("/users/csrf/");
-  }, []);
+  const getCSRF = async () => {
+    await api.get("/users/csrf/");
+  };
+
+  getCSRF();
+}, []);
 
   return (
     <AuthProvider>

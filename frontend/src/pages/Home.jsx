@@ -8,20 +8,26 @@ import "../styles/pages/home.css";
 
 export default function Home() {
   return (
-    <div className="container bg-(--colorBlack)">
-      <section>
+    <div className="w-full bg-(--colorBlack)
+        lg:h-screen
+        lg:overflow-x-hidden
+        lg:snap-y
+        lg:snap-mandatory
+        lg:scroll-smooth
+        ">
+      <section className="lg:h-screen lg:snap-start">
         <Hero />
       </section>
-      <section>
+      <section className="lg:h-screen lg:snap-start">
         <AboutMe />
       </section>
-      <section>
+      <section className="lg:h-screen lg:snap-start">
         <MyWork />
       </section>
-      <section>
+      <section className="lg:h-screen lg:snap-start">
         <Services />
       </section>
-      <section>
+      <section className="lg:h-screen lg:snap-start">
         <Footer />
       </section>
     </div>
