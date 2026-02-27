@@ -121,7 +121,8 @@ class CookieTokenRefreshView(TokenRefreshView):
                 'access',
                 response.data['access'],
                 httponly=True,
-                samesite='Lax',
+                secure=True,
+                samesite='None',
             )
             response.data = {'message': 'Token refreshed'}
 

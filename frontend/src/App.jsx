@@ -11,6 +11,12 @@ import NavBar from "./components/navigation/NavBar";
 import PrivateRoute from "./auth/ProtectedRoute";
 import PublicRoute from "./auth/PublicRoute";
 
+import api from "./api/axios";
+
+useEffect(() => {
+  api.get("/users/csrf/");
+}, []);
+
 function App() {
   return (
     <AuthProvider>

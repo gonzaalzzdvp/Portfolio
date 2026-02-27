@@ -121,26 +121,28 @@ REST_FRAMEWORK = {
 }
 
 #CORS config
-CORS_ALLOW_CREDENTIALS = True
 
 CORS_ALLOWED_ORIGINS = [
     "https://portfolio-5qbe.onrender.com",
 ]
 
 CSRF_TRUSTED_ORIGINS = [
-    "https://tu-frontend.onrender.com",
+    "https://portfolio-5qbe.onrender.com",
 ]
 
-ACCOUNT_UNIQUE_EMAIL = True
+CORS_ALLOW_CREDENTIALS = True
 
 CSRF_COOKIE_SAMESITE = "None"
 CSRF_COOKIE_SECURE = True
 
-SECURE_SSL_REDIRECT = True
 SESSION_COOKIE_SECURE = True
+SESSION_COOKIE_SAMESITE = "None"
 
+SECURE_SSL_REDIRECT = True
 SECURE_BROWSER_XSS_FILTER = True
 SECURE_CONTENT_TYPE_NOSNIFF = True
+
+ACCOUNT_UNIQUE_EMAIL = True
 
 """ WhiteNoise config """
 
