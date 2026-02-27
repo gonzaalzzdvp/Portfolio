@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { AuthProvider } from "./context/AuthContext";
 
@@ -13,11 +14,11 @@ import PublicRoute from "./auth/PublicRoute";
 
 import api from "./api/axios";
 
-useEffect(() => {
-  api.get("/users/csrf/");
-}, []);
-
 function App() {
+  useEffect(() => {
+    api.get("/users/csrf/");
+  }, []);
+
   return (
     <AuthProvider>
       <BrowserRouter>
