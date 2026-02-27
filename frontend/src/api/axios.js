@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const api = axios.create({
-  baseURL: "https://portfolio-bcknd-1965.onrender.com",
+  baseURL: import.meta.env.VITE_API_URL,
   withCredentials: true, 
   xsrfCookieName: "csrftoken",
   xsrfHeaderName: "X-CSRFToken",
