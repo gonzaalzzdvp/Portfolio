@@ -1,0 +1,10 @@
+.bgRegisterImg {
+    background-image: url(/register/registerImg.jpg);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.hrHeight {
+    width: 144px;
+}
