@@ -1,0 +1,10 @@
+.bgLoginImg {
+    background-image: url(/login/loginImg.jpg);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.hrHeight {
+    width: 144px;
+}
